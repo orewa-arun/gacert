@@ -32,15 +32,19 @@ export function Navbar() {
                         }} />
                     </Nav.Link>
                 </Nav>
-                <Button style={{ height: "3.5rem", width: "3.5rem" }}
-                    variant="outline-primary"
-                    className="rounded-circle">
-                    <img src="/imgs/bee.png" style={{
-                        height: "3rem",
-                        width: "3rem",
-                        transform: "translate(-15%,-10%)"
-                    }} />
-                </Button>
+                <div>
+                    USER
+                    <Button style={{ height: "3.5rem", width: "3.5rem" }}
+                        variant="outline-primary"
+                        className="rounded-circle">
+                        <img src="/imgs/bee.png" style={{
+                            height: "3rem",
+                            width: "3rem",
+                            transform: "translate(-15%,-10%)"
+                        }} />
+                    </Button>
+                </div>
+
             </Container>
         </NavbarBs>
     )
