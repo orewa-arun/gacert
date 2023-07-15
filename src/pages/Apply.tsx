@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import profiles from "../data/profiles.json";
+import { Profile } from "../components/Profile.jsx";
 
 export function Apply() {
     const [approverData, setApproverData] = useState({
         "mobileNo": "",
-        "DOB": ""
+        "DOB": "",
+        "publicKey": ""
     });
+
+    const [verified, setVerified] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -13,8 +18,18 @@ export function Apply() {
     };
 
     const handleVerifySubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        // prevents erasure of entered data, stops all event behaviour
         e.preventDefault();
-        alert(`${approverData.mobileNo},${approverData.DOB}`);
+        if (profiles.find(p => {
+            if (p.mobileNo === approverData.mobileNo && p.DOB === approverData.DOB) {
+                return p
+            }
+        })?.publicKey === approverData.publicKey) {
+            setVerified(true);
+            // alert(`${approverData.mobileNo},${approverData.DOB},${approverData.publicKey}`);
+        } else {
+            alert("Verification Error!,check the entered details properly");
+        }
     }
 
     return (
@@ -36,15 +51,20 @@ export function Apply() {
 
                 <Form.Group className="mb-3" controlId="formEthId">
                     <Form.Label>Approver's Blockchain ID :</Form.Label>
-                    <Form.Control type="text" placeholder="Enter the unique ID of the approver" />
+                    <Form.Control type="text" name="publicKey" value={approverData.publicKey} onChange={handleChange} placeholder="Enter the unique ID of the approver" />
                     <Form.Text className="text-muted">
                         We'll never share your Real Identity with anyone
                     </Form.Text>
                 </Form.Group>
 
-                <Button variant="info" className="mb-5" type="submit">
-                    Verify Identity
-                </Button>
+                {verified ? (
+                    <Profile publicKey={approverData.publicKey} />
+                ) : (
+                    <Button variant="info" className="mb-5" type="submit">
+                        Verify Identity
+                    </Button>
+                )}
+
             </Form>
 
             <Form>
