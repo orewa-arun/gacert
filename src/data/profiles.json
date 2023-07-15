@@ -1,0 +1,19 @@
+// !!!Fake keys!!!
+[
+    {
+        "Name": "Suresh",
+        "mobileNo": "9425375183",
+        "DOB": "23/11/1986",
+        "Role": "WMA",
+        "publicKey": "0x180Aa54f13779b1D6b550B42Ed8d1FF200A0D781",
+        "privateKey": "98d44a76c08902831c76db7ed5c7c7a5eb06893418bda96c0d08513c3fdfac85"
+    },
+    {
+        "Name": "Rajesh",
+        "mobileNo": "9325665274",
+        "DOB": "13/6/1990",
+        "Role": "Recycler",
+        "publicKey": "0xF32ceD175171E3D5D80072Db124139FD929af2AE",
+        "privateKey": "fae0219ddfa5238d43b02c9e6ee9b02618d3b7f18000f3874f4699c482595e35"
+    }
+]

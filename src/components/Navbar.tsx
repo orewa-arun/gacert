@@ -35,7 +35,7 @@ export function Navbar() {
                 <div>
                     USER
                     <Button style={{ height: "3.5rem", width: "3.5rem" }}
-                        variant="outline-primary"
+                        variant="outline-warning"
                         className="rounded-circle">
                         <img src="/imgs/bee.png" style={{
                             height: "3rem",
