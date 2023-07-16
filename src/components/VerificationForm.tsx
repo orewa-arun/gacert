@@ -43,7 +43,10 @@ export function VerificationForm({
             </Form.Group>
 
             {verified ? (
-                <Profile publicKey={approverData.publicKey} />
+                <div className="d-flex flex-column justify-content-center align-items-center">
+                    <h5>Verified Approver's Profile :</h5>
+                    <Profile publicKey={approverData.publicKey} />
+                </div>
             ) : (
                 <Button variant="info" className="mb-5" type="submit">
                     Verify Identity

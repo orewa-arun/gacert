@@ -12,28 +12,25 @@ export function Profile({ publicKey }: ProfileProps) {
     }
 
     return (
-        <div className="d-flex flex-column justify-content-center align-items-center">
-            <h5>Verified Approver's Profile :</h5>
-            <Card style={{ width: '25rem' }}>
-                <Card.Img variant="top" src="/imgs/profile.jpg"
-                    height="300px"
-                    width="300px"
-                    style={{ objectFit: "cover" }}
-                />
-                <Card.Body>
-                    <Container>
-                        {/* Columns are always 50% wide, on mobile and desktop */}
-                        <Row className="d-flex align-items-center">
-                            <Col className="fw-bold fs-5" xs={4}>Name :</Col>
-                            <Col className="fs-5" xs={6}>{profile.Name}</Col>
-                        </Row>
-                        <Row className="d-flex align-items-center">
-                            <Col className="fw-bold fs-5" xs={4}>Role :</Col>
-                            <Col className="fs-5" xs={6}>{profile.Role}</Col>
-                        </Row>
-                    </Container>
-                </Card.Body>
-            </Card>
-        </div >
+        <Card style={{ width: '25rem' }}>
+            <Card.Img variant="top" src="/imgs/profile.jpg"
+                height="300px"
+                width="300px"
+                style={{ objectFit: "cover" }}
+            />
+            <Card.Body>
+                <Container>
+                    {/* Columns are always 50% wide, on mobile and desktop */}
+                    <Row className="d-flex align-items-center">
+                        <Col className="fw-bold fs-5" xs={4}>Name :</Col>
+                        <Col className="fs-5" xs={6}>{profile.Name}</Col>
+                    </Row>
+                    <Row className="d-flex align-items-center">
+                        <Col className="fw-bold fs-5" xs={4}>Role :</Col>
+                        <Col className="fs-5" xs={6}>{profile.Role}</Col>
+                    </Row>
+                </Container>
+            </Card.Body>
+        </Card>
     )
 }

@@ -11,6 +11,8 @@ type Claim = {
 }
 
 type CertificationContext = {
+    user: string,
+    changeUser(): void,
     openDashboard(): void,
     closeDashboard(): void,
     addClaim(applier: string, approver: string, isSender: boolean, type: string, qty: number): void
@@ -31,9 +33,18 @@ export function CertificationProvider({ children }: CertificationProviderProps) 
     const [total, setTotal] = useState(0);
     const [claims, setClaims] = useState<Claim[]>([]);
     const [isOpenDashboard, setIsOpenDashboard] = useState(false);
+    const [user, setUser] = useState("0x180Aa54f13779b1D6b550B42Ed8d1FF200A0D781");
 
     const openDashboard = () => setIsOpenDashboard(true);
     const closeDashboard = () => setIsOpenDashboard(false);
+
+    const changeUser = () => {
+        if (user === "0xF32ceD175171E3D5D80072Db124139FD929af2AE") {
+            setUser("0x180Aa54f13779b1D6b550B42Ed8d1FF200A0D781");
+        } else {
+            setUser("0xF32ceD175171E3D5D80072Db124139FD929af2AE");
+        }
+    }
 
     console.log(total, claims);
 
@@ -52,12 +63,14 @@ export function CertificationProvider({ children }: CertificationProviderProps) 
 
     return (
         <CertificationContext.Provider value={{
+            user,
+            changeUser,
             openDashboard,
             closeDashboard,
             addClaim
         }}>
             {children}
-            <UserDashboard isOpen={isOpenDashboard} />
+            <UserDashboard {...{ isOpenDashboard, user }} />
         </CertificationContext.Provider>
     )
 }

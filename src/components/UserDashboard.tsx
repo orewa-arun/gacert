@@ -1,22 +1,25 @@
-import { Offcanvas, Stack } from "react-bootstrap";
+import { Button, Offcanvas, Stack } from "react-bootstrap";
 import { useCertificationContext } from "../context/CertificationContext";
+import { Profile } from "./Profile.jsx";
 
 type ShoppingCartProps = {
-    isOpen: boolean
+    isOpenDashboard: boolean,
+    user: string,
 }
 
-export function UserDashboard({ isOpen }: ShoppingCartProps) {
+export function UserDashboard({ isOpenDashboard, user }: ShoppingCartProps) {
 
-    const { closeDashboard } = useCertificationContext();
+    const { closeDashboard, changeUser } = useCertificationContext();
 
     return (
-        <Offcanvas show={isOpen} onHide={closeDashboard} placement="end">
+        <Offcanvas show={isOpenDashboard} onHide={closeDashboard} placement="end">
             <Offcanvas.Header closeButton>
-                <Offcanvas.Title>User</Offcanvas.Title>
+                <Offcanvas.Title>User Profile :</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
                 <Stack gap={3}>
-
+                    <Profile publicKey={user} />
+                    <Button variant="light" onClick={changeUser}>Switch user</Button>
                 </Stack>
             </Offcanvas.Body>
         </Offcanvas>
