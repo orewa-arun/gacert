@@ -1,8 +1,12 @@
 import { Button, Container, Nav, Navbar as NavbarBs } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
+import { useCertificationContext } from "../context/CertificationContext";
 
 
 export function Navbar() {
+
+    const { openDashboard } = useCertificationContext();
+
     return (
         <NavbarBs sticky="top" className="bg-white shadow-sm mb-3 mt-1">
             <Container className="d-flex justify-content-between">
@@ -33,10 +37,10 @@ export function Navbar() {
                     </Nav.Link>
                 </Nav>
                 <div>
-                    USER
                     <Button style={{ height: "3.5rem", width: "3.5rem" }}
                         variant="outline-warning"
-                        className="rounded-circle">
+                        className="rounded-circle"
+                        onClick={openDashboard}>
                         <img src="/imgs/bee.png" style={{
                             height: "3rem",
                             width: "3rem",

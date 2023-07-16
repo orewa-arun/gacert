@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
 type ApplicationFormProps = {
@@ -7,6 +8,11 @@ type ApplicationFormProps = {
     handleQuantityChange(e: React.ChangeEvent<HTMLInputElement>): void,
     sendChecked: boolean,
     receiveChecked: boolean,
+    verified: boolean,
+    plasticData: {
+        plasticType: string;
+        plasticQuantity: number;
+    },
 }
 
 export function ApplicationForm({
@@ -16,7 +22,18 @@ export function ApplicationForm({
     handleQuantityChange,
     sendChecked,
     receiveChecked,
+    verified,
+    plasticData
 }: ApplicationFormProps) {
+
+    const [agree, setAgree] = useState(false);
+
+    const submitDisable = (plasticData.plasticQuantity == 0 || plasticData.plasticType == "" || !agree);
+
+    const handleAgree = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAgree(e.target.checked);
+    }
+
     return (
 
         <Form onSubmit={handlePlasticSubmit}>
@@ -29,6 +46,7 @@ export function ApplicationForm({
                         type="checkbox"
                         id="send-checkbox"
                         checked={sendChecked}
+                        disabled={!verified}
                         onChange={handleCheckChange}
                         label="send"
                     />
@@ -36,6 +54,7 @@ export function ApplicationForm({
                         type="checkbox"
                         id="receive-checkbox"
                         checked={receiveChecked}
+                        disabled={!verified}
                         onChange={handleCheckChange}
                         label="receive"
                     />
@@ -44,7 +63,9 @@ export function ApplicationForm({
 
             <Form.Group className="mb-3" controlId="formPlaticType">
                 <Form.Label>Plastic type:</Form.Label>
-                <Form.Select name="plasticType" onChange={handlePlasticTypeChange}>
+                <Form.Select name="plasticType"
+                    disabled={!verified}
+                    onChange={handlePlasticTypeChange}>
                     <option>Select the plastic type involved in transaction</option>
                     <option value="1">Polyethylene Terephthalate (PET), Ex : water bottles and plastic trays</option>
                     <option value="2">High Density Polyethylene (HDPE), Ex : milk cartoons and shampoo bottles</option>
@@ -54,7 +75,11 @@ export function ApplicationForm({
 
             <Form.Group className="mb-5" controlId="formPlasticQuantity">
                 <Form.Label>Plastic Quantity (In kg) :</Form.Label>
-                <Form.Control type="number" name="plasticQuantity" onChange={handleQuantityChange} placeholder="Quantity" />
+                <Form.Control type="number"
+                    name="plasticQuantity"
+                    onChange={handleQuantityChange}
+                    disabled={!verified}
+                    placeholder="Quantity" />
                 <Form.Text className="text-muted">
                     We appreciate your honesty!,try to be as accurate as possible
                 </Form.Text>
@@ -62,6 +87,7 @@ export function ApplicationForm({
 
             <Form.Group className="mb-3" controlId="formAgreeCheckbox" style={{ backgroundColor: "#fadf48" }}>
                 <Form.Check
+                    onChange={handleAgree}
                     type="checkbox"
                     label="I hereby declare that the information furnished above is true, 
                     complete and correct to the best of my knowledge and belief."
@@ -69,7 +95,7 @@ export function ApplicationForm({
                 />
             </Form.Group>
             <div className="text-center">
-                <Button type="submit" className="btn btn-primary py-1 px-3">
+                <Button type="submit" disabled={submitDisable} className="btn btn-primary py-1 px-3">
                     Submit
                 </Button>
                 <br />

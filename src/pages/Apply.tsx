@@ -2,8 +2,11 @@ import { useState } from "react";
 import profiles from "../data/profiles.json";
 import { VerificationForm } from "../components/VerificationForm.js";
 import { ApplicationForm } from "../components/ApplicationForm.js";
+import { useCertificationContext } from "../context/CertificationContext.js";
 
 export function Apply() {
+
+    const { addClaim } = useCertificationContext();
 
     const [approverData, setApproverData] = useState({
         mobileNo: "",
@@ -83,6 +86,8 @@ export function Apply() {
                 handleQuantityChange,
                 sendChecked,
                 receiveChecked,
+                verified,
+                plasticData
             }} />
         </>
     )

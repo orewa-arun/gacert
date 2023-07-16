@@ -1,4 +1,5 @@
 import { ReactNode, createContext, useContext, useState } from "react";
+import { UserDashboard } from "../components/UserDashboard";
 
 type Claim = {
     id: number,
@@ -10,6 +11,8 @@ type Claim = {
 }
 
 type CertificationContext = {
+    openDashboard(): void,
+    closeDashboard(): void,
     addClaim(applier: string, approver: string, isSender: boolean, type: string, qty: number): void
 }
 
@@ -27,6 +30,12 @@ export function CertificationProvider({ children }: CertificationProviderProps) 
     // These are like global variables!
     const [total, setTotal] = useState(0);
     const [claims, setClaims] = useState<Claim[]>([]);
+    const [isOpenDashboard, setIsOpenDashboard] = useState(false);
+
+    const openDashboard = () => setIsOpenDashboard(true);
+    const closeDashboard = () => setIsOpenDashboard(false);
+
+    console.log(total, claims);
 
     function addClaim(applier: string, approver: string, isSender: boolean, type: string, qty: number) {
         const claim: Claim = {
@@ -43,9 +52,12 @@ export function CertificationProvider({ children }: CertificationProviderProps) 
 
     return (
         <CertificationContext.Provider value={{
+            openDashboard,
+            closeDashboard,
             addClaim
         }}>
             {children}
+            <UserDashboard isOpen={isOpenDashboard} />
         </CertificationContext.Provider>
     )
 }
