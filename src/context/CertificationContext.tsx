@@ -72,7 +72,7 @@ export function CertificationProvider({ children }: CertificationProviderProps) 
             addClaim
         }}>
             {children}
-            <UserDashboard {...{ isOpenDashboard, user }} />
+            <UserDashboard {...{ isOpenDashboard }} />
         </CertificationContext.Provider>
     )
 }

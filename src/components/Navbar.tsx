@@ -5,7 +5,7 @@ import { useCertificationContext } from "../context/CertificationContext";
 
 export function Navbar() {
 
-    const { openDashboard } = useCertificationContext();
+    const { openDashboard, user } = useCertificationContext();
 
     return (
         <NavbarBs sticky="top" className="bg-white shadow-sm mb-3 mt-1">
@@ -37,6 +37,7 @@ export function Navbar() {
                     </Nav.Link>
                 </Nav>
                 <div>
+                    User : {user}
                     <Button style={{ height: "3.5rem", width: "3.5rem" }}
                         variant="outline-warning"
                         className="rounded-circle"
