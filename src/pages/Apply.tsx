@@ -6,7 +6,7 @@ import { useCertificationContext } from "../context/CertificationContext.js";
 
 export function Apply() {
 
-    const { addClaim } = useCertificationContext();
+    const { addClaim, user } = useCertificationContext();
 
     const [approverData, setApproverData] = useState({
         mobileNo: "",
@@ -47,7 +47,8 @@ export function Apply() {
 
     const handlePlasticSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        alert(`${sendChecked},${plasticData.plasticType},${plasticData.plasticQuantity}`);
+        // alert(`${sendChecked},${plasticData.plasticType},${plasticData.plasticQuantity}`);
+        addClaim(user, approverData.publicKey, sendChecked, plasticData.plasticType, plasticData.plasticQuantity);
     }
 
     const handleVerifyChange = (e: React.ChangeEvent<HTMLInputElement>) => {

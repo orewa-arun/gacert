@@ -46,7 +46,7 @@ export function CertificationProvider({ children }: CertificationProviderProps) 
         }
     }
 
-    console.log(total, claims);
+    // console.log(claims);
 
     function addClaim(applier: string, approver: string, isSender: boolean, type: string, qty: number) {
         const claim: Claim = {
