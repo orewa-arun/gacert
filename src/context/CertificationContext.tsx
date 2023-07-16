@@ -15,6 +15,7 @@ type CertificationContext = {
     changeUser(): void,
     openDashboard(): void,
     closeDashboard(): void,
+    claims: Claim[],
     addClaim(applier: string, approver: string, isSender: boolean, type: string, qty: number): void
 }
 
@@ -67,6 +68,7 @@ export function CertificationProvider({ children }: CertificationProviderProps) 
             changeUser,
             openDashboard,
             closeDashboard,
+            claims,
             addClaim
         }}>
             {children}
