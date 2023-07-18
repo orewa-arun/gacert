@@ -10,7 +10,7 @@ export function Apply() {
 
     const navigate = useNavigate();
 
-    const { addClaim, user, approveClaim, addApplierSignature } = useCertificationContext();
+    const { addClaim, user, addApplierSignature } = useCertificationContext();
 
     const [approverData, setApproverData] = useState({
         mobileNo: "",
@@ -53,6 +53,7 @@ export function Apply() {
         e.preventDefault();
         // alert(`${sendChecked},${plasticData.plasticType},${plasticData.plasticQuantity}`);
         const id = addClaim(user, approverData.publicKey, sendChecked, plasticData.plasticType, plasticData.plasticQuantity, false);
+        console.log(id);
         const applyTx = await applyTransaction(user, id, approverData.publicKey);
         if (applyTx) {
             addApplierSignature(id, applyTx);

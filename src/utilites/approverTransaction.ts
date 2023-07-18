@@ -13,7 +13,7 @@ export async function approveTransaction(approver: string, id: number) {
 
     const gacert = new ethers.Contract("0x211C36F302113b59CA67E7C48c57aaC510Fddb90", abi, wallet);
 
-    const tx = await gacert.approveCert(id, approver);
+    const tx = await gacert.approveCert(id);
 
     const polygonScanURL = `https://mumbai.polygonscan.com/tx/${tx.hash}`;
 

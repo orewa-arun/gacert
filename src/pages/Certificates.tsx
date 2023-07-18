@@ -1,7 +1,6 @@
 import { Stack } from "react-bootstrap";
 import { useCertificationContext } from "../context/CertificationContext";
-import { Claim } from "../components/Claim.jsx"
-import { Approval } from "../components/Approval.js";
+import { Certificate } from "../components/Certificate.js";
 
 export function Certificates() {
 

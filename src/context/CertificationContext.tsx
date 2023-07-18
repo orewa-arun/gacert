@@ -72,10 +72,12 @@ export function CertificationProvider({ children }: CertificationProviderProps) 
             plasticQuantity: qty,
             isApproved: false
         }
+        // console.log(`total before : ${total}`)
         setTotal(total + 1);
         setClaims([...claims, claim]);
-
-        return (total - 1);
+        // setState will not be reflected immediately
+        // console.log(`total after : ${total}`)
+        return total;
     }
 
     function approveClaim(id: number) {
