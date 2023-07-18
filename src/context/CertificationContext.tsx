@@ -16,7 +16,7 @@ type CertificationContext = {
     openDashboard(): void,
     closeDashboard(): void,
     claims: Claim[],
-    addClaim(applier: string, approver: string, isSender: boolean, type: string, qty: number): void
+    addClaim(applier: string, approver: string, isSender: boolean, type: string, qty: number): number
 }
 
 const CertificationContext = createContext({} as CertificationContext);
@@ -49,7 +49,7 @@ export function CertificationProvider({ children }: CertificationProviderProps) 
 
     // console.log(claims);
 
-    function addClaim(applier: string, approver: string, isSender: boolean, type: string, qty: number) {
+    function addClaim(applier: string, approver: string, isSender: boolean, type: string, qty: number): number {
         const claim: Claim = {
             id: total,
             applierAddress: applier,
@@ -60,6 +60,8 @@ export function CertificationProvider({ children }: CertificationProviderProps) 
         }
         setTotal(total + 1);
         setClaims([...claims, claim]);
+
+        return (total - 1);
     }
 
     return (

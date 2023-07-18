@@ -3,8 +3,12 @@ import profiles from "../data/profiles.json";
 import { VerificationForm } from "../components/VerificationForm.js";
 import { ApplicationForm } from "../components/ApplicationForm.js";
 import { useCertificationContext } from "../context/CertificationContext.js";
+import { useNavigate } from "react-router-dom";
+import { applyTransaction } from "../utilites/applyTransaction.js";
 
 export function Apply() {
+
+    const navigate = useNavigate();
 
     const { addClaim, user } = useCertificationContext();
 
@@ -45,10 +49,13 @@ export function Apply() {
         setPlasticData((previousData) => ({ ...previousData, [name]: value }));
     }
 
-    const handlePlasticSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handlePlasticSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // alert(`${sendChecked},${plasticData.plasticType},${plasticData.plasticQuantity}`);
-        addClaim(user, approverData.publicKey, sendChecked, plasticData.plasticType, plasticData.plasticQuantity);
+        const id = addClaim(user, approverData.publicKey, sendChecked, plasticData.plasticType, plasticData.plasticQuantity);
+        const userAddress = await applyTransaction(user, id, approverData.publicKey);
+        console.log(userAddress);
+        navigate("/");
     }
 
     const handleVerifyChange = (e: React.ChangeEvent<HTMLInputElement>) => {

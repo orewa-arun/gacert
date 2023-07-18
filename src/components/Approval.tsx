@@ -1,7 +1,9 @@
-import { Button, Card, Col, Container, Row } from "react-bootstrap"
+import { Button, Form, Card, Col, Container, Row } from "react-bootstrap"
 import { useCertificationContext } from "../context/CertificationContext"
 import { Profile } from "./Profile";
 import { useState } from "react";
+import { approveTransaction } from "../utilites/approverTransaction";
+import { useNavigate } from "react-router-dom";
 
 type ClaimProps = {
     id: number,
@@ -21,9 +23,25 @@ export function Approval({
     plasticQuantity
 }: ClaimProps) {
 
+    const navigate = useNavigate();
+
     const { user } = useCertificationContext();
 
     const [showClaimer, setShowClaimer] = useState(false);
+
+    const [agreed, setAgreed] = useState(false);
+
+    const handleAgree = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAgreed(e.target.checked);
+    }
+
+    const handleApproval = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const userAddress = await approveTransaction(user, id);
+        alert(`Certificate generated!!!`);
+        console.log(userAddress);
+        navigate("/");
+    }
 
     const show = () => {
         setShowClaimer(!showClaimer)
@@ -59,10 +77,28 @@ export function Approval({
                                     <Col className="fs-5" xs={6}>{plasticQuantity}</Col>
                                 </Row>
                             </Container>
+                            <Form onSubmit={handleApproval} className="mt-4">
+                                <Form.Group className="mb-3" controlId="formAgreeCheck" style={{ backgroundColor: "#fadf48" }}>
+                                    <Form.Check
+                                        onChange={handleAgree}
+                                        type="checkbox"
+                                        label="I hereby declare that the information furnished above is true, 
+                                complete and correct to the best of my knowledge and belief."
+                                        className="mx-2"
+                                    />
+                                </Form.Group>
+                                <div className="text-center">
+                                    <Button type="submit" disabled={!agreed} className="btn btn-primary py-1 px-5">
+                                        Approve
+                                    </Button>
+                                    <br />
+                                </div>
+                            </Form>
                         </Card.Body>
                     </Card>
                 </div>
-            )}
-        </div>
+            )
+            }
+        </div >
     )
 }
