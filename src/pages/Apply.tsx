@@ -5,6 +5,7 @@ import { ApplicationForm } from "../components/ApplicationForm.js";
 import { useCertificationContext } from "../context/CertificationContext.js";
 import { useNavigate } from "react-router-dom";
 import { applyTransaction } from "../utilites/applyTransaction.js";
+import { Spinner } from "react-bootstrap";
 
 export function Apply() {
 
@@ -17,6 +18,8 @@ export function Apply() {
         DOB: "",
         publicKey: ""
     });
+
+    const [submitLoading, setSubmitLoading] = useState(false);
 
     const [verified, setIsVerified] = useState(false);
 
@@ -54,6 +57,7 @@ export function Apply() {
         // alert(`${sendChecked},${plasticData.plasticType},${plasticData.plasticQuantity}`);
         const id = addClaim(user, approverData.publicKey, sendChecked, plasticData.plasticType, plasticData.plasticQuantity, false);
         console.log(id);
+        setSubmitLoading(true);
         const applyTx = await applyTransaction(user, id, approverData.publicKey);
         if (applyTx) {
             addApplierSignature(id, applyTx);
@@ -88,23 +92,42 @@ export function Apply() {
 
     return (
         <>
-            <VerificationForm {...{
-                handleVerifySubmit,
-                handleVerifyChange,
-                verified,
-                approverData
-            }} />
+            {submitLoading ? (
+                <div className="d-flex flex-column align-items-center my-5 gap-4">
+                    <h4 className="text-muted">Your application is being proccessed!</h4>
+                    <div className="d-flex justify-content-center align-items-center gap-2">
+                        <Spinner animation="grow" variant="success" />
+                        <Spinner animation="grow" variant="success" />
+                        <Spinner animation="grow" variant="success" />
+                    </div>
+                    <div className="d-flex justify-content-center">
+                        <img src="/imgs/bee.png" style={{ width: "4rem", height: "4rem" }} />
+                        <img src="/imgs/bee.png" style={{ width: "4rem", height: "4rem" }} />
+                        <img src="/imgs/bee.png" style={{ width: "4rem", height: "4rem" }} />
+                    </div>
+                </div>
+            ) : (
+                <div>
+                    <VerificationForm {...{
+                        handleVerifySubmit,
+                        handleVerifyChange,
+                        verified,
+                        approverData
+                    }} />
 
-            <ApplicationForm {...{
-                handlePlasticSubmit,
-                handleCheckChange,
-                handlePlasticTypeChange,
-                handleQuantityChange,
-                sendChecked,
-                receiveChecked,
-                verified,
-                plasticData
-            }} />
+                    <ApplicationForm {...{
+                        handlePlasticSubmit,
+                        handleCheckChange,
+                        handlePlasticTypeChange,
+                        handleQuantityChange,
+                        sendChecked,
+                        receiveChecked,
+                        verified,
+                        plasticData
+                    }} />
+                </div>
+            )
+            }
         </>
     )
 }
