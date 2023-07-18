@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import { UserDashboard } from "../components/UserDashboard";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 type Claim = {
     id: number,
@@ -42,12 +43,12 @@ type CertificationProviderProps = {
 
 export function CertificationProvider({ children }: CertificationProviderProps) {
     // These are like global variables!
-    const [total, setTotal] = useState(0);
-    const [claims, setClaims] = useState<Claim[]>([]);
+    const [total, setTotal] = useLocalStorage("total", 0);
+    const [claims, setClaims] = useLocalStorage<Claim[]>("claims", []);
     const [isOpenDashboard, setIsOpenDashboard] = useState(false);
-    const [user, setUser] = useState("0x180Aa54f13779b1D6b550B42Ed8d1FF200A0D781");
+    const [user, setUser] = useLocalStorage("user", "0x180Aa54f13779b1D6b550B42Ed8d1FF200A0D781");
 
-    const [signatures, setSignatures] = useState<BlockchainSignature[]>([]);
+    const [signatures, setSignatures] = useLocalStorage<BlockchainSignature[]>("signatures", []);
 
     const openDashboard = () => setIsOpenDashboard(true);
     const closeDashboard = () => setIsOpenDashboard(false);
@@ -85,6 +86,9 @@ export function CertificationProvider({ children }: CertificationProviderProps) 
         if (!claim) return null;
 
         claim.isApproved = true;
+
+        const otherClaims = claims.filter(claim => claim.id !== id);
+        setClaims([...otherClaims, claim]);
     }
 
     function getSignature(id: number) {
@@ -108,8 +112,9 @@ export function CertificationProvider({ children }: CertificationProviderProps) 
 
         signWithId.approverSignature = sign;
 
-        setSignatures(signatures.filter(s => s.id !== id));
-        setSignatures([...signatures, signWithId]);
+        const otherSignatures = signatures.filter(s => s.id !== id)
+
+        setSignatures([...otherSignatures, signWithId]);
     }
 
     return (

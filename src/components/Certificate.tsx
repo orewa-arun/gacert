@@ -3,6 +3,7 @@ import { useCertificationContext } from "../context/CertificationContext"
 import { useState } from "react";
 import profiles from "../data/profiles.json";
 import { Link } from "react-router-dom";
+import { Profile } from "./Profile";
 
 type CertificateProps = {
     id: number,
@@ -52,6 +53,11 @@ export function Certificate({
 
                 <Card.Body>
                     <Container>
+                        <div className="d-flex justify-content-around">
+                            {showApplier && <Profile publicKey={applierAddress} />}
+                            {showApprover && <Profile publicKey={verifierAddress} />}
+                        </div>
+
                         <Row>
                             <Col className="fw-bold fs-5" xs={4}>Applied by :</Col>
                             <Col className="fs-5" xs={6}>{applier.Name}</Col>
