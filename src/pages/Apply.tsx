@@ -10,7 +10,7 @@ export function Apply() {
 
     const navigate = useNavigate();
 
-    const { addClaim, user } = useCertificationContext();
+    const { addClaim, user, approveClaim, addApplierSignature } = useCertificationContext();
 
     const [approverData, setApproverData] = useState({
         mobileNo: "",
@@ -52,10 +52,17 @@ export function Apply() {
     const handlePlasticSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // alert(`${sendChecked},${plasticData.plasticType},${plasticData.plasticQuantity}`);
-        const id = addClaim(user, approverData.publicKey, sendChecked, plasticData.plasticType, plasticData.plasticQuantity);
-        const userAddress = await applyTransaction(user, id, approverData.publicKey);
-        console.log(userAddress);
-        navigate("/");
+        const id = addClaim(user, approverData.publicKey, sendChecked, plasticData.plasticType, plasticData.plasticQuantity, false);
+        const applyTx = await applyTransaction(user, id, approverData.publicKey);
+        if (applyTx) {
+            addApplierSignature(id, applyTx);
+            console.log(applyTx);
+            navigate("/");
+            alert(`Your application is successful,check ${applyTx} to view on block explorer!!`);
+        } else {
+            alert("Transaction apply failed!!");
+        }
+
     }
 
     const handleVerifyChange = (e: React.ChangeEvent<HTMLInputElement>) => {

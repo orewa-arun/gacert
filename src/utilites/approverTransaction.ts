@@ -15,5 +15,7 @@ export async function approveTransaction(approver: string, id: number) {
 
     const tx = await gacert.approveCert(id, approver);
 
-    return tx;
+    const polygonScanURL = `https://mumbai.polygonscan.com/tx/${tx.hash}`;
+
+    return polygonScanURL;
 }

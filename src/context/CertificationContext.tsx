@@ -11,6 +11,12 @@ type Claim = {
     isApproved: boolean
 }
 
+type BlockchainSignature = {
+    id: number,
+    applierSignature: string,
+    approverSignature: string
+}
+
 type CertificationContext = {
     user: string,
     changeUser(): void,
@@ -18,7 +24,10 @@ type CertificationContext = {
     closeDashboard(): void,
     claims: Claim[],
     addClaim(applier: string, approver: string, isSender: boolean, type: string, qty: number, isApproved: boolean): number,
-    approveClaim(id: number): void
+    approveClaim(id: number): void,
+    getSignature(id: number): BlockchainSignature | null,
+    addApplierSignature(id: number, sign: string): void,
+    addApproverSignature(id: number, sign: string): void,
 }
 
 const CertificationContext = createContext({} as CertificationContext);
@@ -37,6 +46,8 @@ export function CertificationProvider({ children }: CertificationProviderProps) 
     const [claims, setClaims] = useState<Claim[]>([]);
     const [isOpenDashboard, setIsOpenDashboard] = useState(false);
     const [user, setUser] = useState("0x180Aa54f13779b1D6b550B42Ed8d1FF200A0D781");
+
+    const [signatures, setSignatures] = useState<BlockchainSignature[]>([]);
 
     const openDashboard = () => setIsOpenDashboard(true);
     const closeDashboard = () => setIsOpenDashboard(false);
@@ -74,6 +85,31 @@ export function CertificationProvider({ children }: CertificationProviderProps) 
         claim.isApproved = true;
     }
 
+    function getSignature(id: number) {
+        const signature = signatures.find(sign => sign.id === id);
+        if (!signature) return null;
+        return signature
+    }
+
+    function addApplierSignature(id: number, sign: string) {
+        const signature: BlockchainSignature = {
+            id: id,
+            applierSignature: sign,
+            approverSignature: ''
+        }
+        setSignatures([...signatures, signature]);
+    }
+
+    function addApproverSignature(id: number, sign: string) {
+        let signWithId = signatures.find(sign => sign.id === id);
+        if (!signWithId) return null;
+
+        signWithId.approverSignature = sign;
+
+        setSignatures(signatures.filter(s => s.id !== id));
+        setSignatures([...signatures, signWithId]);
+    }
+
     return (
         <CertificationContext.Provider value={{
             user,
@@ -82,7 +118,10 @@ export function CertificationProvider({ children }: CertificationProviderProps) 
             closeDashboard,
             claims,
             addClaim,
-            approveClaim
+            approveClaim,
+            getSignature,
+            addApplierSignature,
+            addApproverSignature,
         }}>
             {children}
             <UserDashboard {...{ isOpenDashboard }} />

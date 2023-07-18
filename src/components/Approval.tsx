@@ -25,7 +25,7 @@ export function Approval({
 
     const navigate = useNavigate();
 
-    const { user } = useCertificationContext();
+    const { user, approveClaim, addApproverSignature } = useCertificationContext();
 
     const [showClaimer, setShowClaimer] = useState(false);
 
@@ -37,10 +37,16 @@ export function Approval({
 
     const handleApproval = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const userAddress = await approveTransaction(user, id);
-        alert(`Certificate generated!!!`);
-        console.log(userAddress);
-        navigate("/certificates");
+        const approveTx = await approveTransaction(user, id);
+        if (approveTx) {
+            approveClaim(id);
+            addApproverSignature(id, approveTx);
+            console.log(approveTx);
+            navigate("/certificates");
+            alert(`Your certificate is successfully generated,check ${approveTx} to view on block explorer!!`);
+        } else {
+            alert("Transaction approve failed!!");
+        }
     }
 
     const show = () => {
