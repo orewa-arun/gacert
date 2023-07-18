@@ -7,7 +7,8 @@ type Claim = {
     verifierAddress: string,
     isSender: boolean,
     plasticType: string,
-    plasticQuantity: number
+    plasticQuantity: number,
+    isApproved: boolean
 }
 
 type CertificationContext = {
@@ -16,7 +17,8 @@ type CertificationContext = {
     openDashboard(): void,
     closeDashboard(): void,
     claims: Claim[],
-    addClaim(applier: string, approver: string, isSender: boolean, type: string, qty: number): number
+    addClaim(applier: string, approver: string, isSender: boolean, type: string, qty: number, isApproved: boolean): number,
+    approveClaim(id: number): void
 }
 
 const CertificationContext = createContext({} as CertificationContext);
@@ -49,19 +51,27 @@ export function CertificationProvider({ children }: CertificationProviderProps) 
 
     // console.log(claims);
 
-    function addClaim(applier: string, approver: string, isSender: boolean, type: string, qty: number): number {
+    function addClaim(applier: string, approver: string, isSender: boolean, type: string, qty: number, isApproved: boolean): number {
         const claim: Claim = {
             id: total,
             applierAddress: applier,
             verifierAddress: approver,
             isSender: isSender,
             plasticType: type,
-            plasticQuantity: qty
+            plasticQuantity: qty,
+            isApproved: false
         }
         setTotal(total + 1);
         setClaims([...claims, claim]);
 
         return (total - 1);
+    }
+
+    function approveClaim(id: number) {
+        const claim = claims.find(claim => claim.id === id);
+        if (!claim) return null;
+
+        claim.isApproved = true;
     }
 
     return (
@@ -71,7 +81,8 @@ export function CertificationProvider({ children }: CertificationProviderProps) 
             openDashboard,
             closeDashboard,
             claims,
-            addClaim
+            addClaim,
+            approveClaim
         }}>
             {children}
             <UserDashboard {...{ isOpenDashboard }} />

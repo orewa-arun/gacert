@@ -40,7 +40,7 @@ export function Approval({
         const userAddress = await approveTransaction(user, id);
         alert(`Certificate generated!!!`);
         console.log(userAddress);
-        navigate("/");
+        navigate("/certificates");
     }
 
     const show = () => {
