@@ -13,7 +13,7 @@ export function Profile({ publicKey }: ProfileProps) {
 
     return (
         <Card style={{ width: '25rem' }}>
-            <Card.Img variant="top" src="/imgs/profile.jpg"
+            <Card.Img variant="top" src={profile.imgURL}
                 height="300px"
                 width="300px"
                 style={{ objectFit: "cover" }}
