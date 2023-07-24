@@ -7,8 +7,8 @@ export function Home() {
 
     const { claims, user } = useCertificationContext();
 
-    const claim = claims.find(claim => claim.applierAddress === user);
-    const approve = claims.find(claim => claim.verifierAddress === user);
+    const claim = claims.find(claim => (claim.applierAddress === user && !claim.isApproved));
+    const approve = claims.find(claim => (claim.verifierAddress === user && !claim.isApproved));
 
     return (
         <div className="d-flex flex-column justify-content-center ">
