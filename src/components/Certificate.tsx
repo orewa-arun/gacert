@@ -4,6 +4,7 @@ import { useState } from "react";
 import profiles from "../data/profiles.json";
 import { Link } from "react-router-dom";
 import { Profile } from "./Profile";
+import { hashGenerator } from "../utilites/hashGenerator";
 
 type CertificateProps = {
     id: number,
@@ -11,7 +12,8 @@ type CertificateProps = {
     verifierAddress: string,
     isSender: boolean,
     plasticType: string,
-    plasticQuantity: number
+    plasticQuantity: number,
+    isApproved: boolean
 }
 
 export function Certificate({
@@ -20,7 +22,8 @@ export function Certificate({
     verifierAddress,
     isSender,
     plasticType,
-    plasticQuantity
+    plasticQuantity,
+    isApproved
 }: CertificateProps) {
 
     const { getSignature } = useCertificationContext();
@@ -39,6 +42,8 @@ export function Certificate({
     const approverShow = () => {
         setShowApprover(!showApprover);
     }
+
+    const hash = hashGenerator({ id, applierAddress, verifierAddress, isSender, plasticType, plasticQuantity, isApproved });
 
     return (
         <div className="d-flex justify-content-center">
@@ -103,6 +108,9 @@ export function Certificate({
                                     </div>
                                 </Col>
                             </Row>
+                            <div>
+                                {hash}
+                            </div>
                         </Stack>
                     </Container>
                 </Card.Body>
