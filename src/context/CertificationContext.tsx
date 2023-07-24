@@ -2,7 +2,7 @@ import { ReactNode, createContext, useContext, useState } from "react";
 import { UserDashboard } from "../components/UserDashboard";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
-type Claim = {
+export type Claim = {
     id: number,
     applierAddress: string,
     verifierAddress: string,

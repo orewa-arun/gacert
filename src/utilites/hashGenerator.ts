@@ -1,14 +1,6 @@
 import {sha256,toUtf8Bytes } from 'ethers';
+import {Claim} from "../context/CertificationContext.jsx";
 
-type Claim = {
-    id: number,
-    applierAddress: string,
-    verifierAddress: string,
-    isSender: boolean,
-    plasticType: string,
-    plasticQuantity: number,
-    isApproved: boolean
-}
 
 export function hashGenerator(claim : Claim){
     const claimAsString = JSON.stringify(claim);

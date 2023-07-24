@@ -25,7 +25,7 @@ export function Approval({
 
     const navigate = useNavigate();
 
-    const { user, approveClaim, addApproverSignature } = useCertificationContext();
+    const { user, approveClaim, addApproverSignature, claims } = useCertificationContext();
 
     const [showClaimer, setShowClaimer] = useState(false);
 
@@ -40,7 +40,11 @@ export function Approval({
     const handleApproval = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setSubmitLoading(true);
-        const approveTx = await approveTransaction(user, id);
+
+        const claim = claims.find(claim => claim.id === id);
+        if (!claim) return null;
+
+        const approveTx = await approveTransaction(user, id, claim);
         if (approveTx) {
             approveClaim(id);
             addApproverSignature(id, approveTx);

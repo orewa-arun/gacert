@@ -6,6 +6,7 @@ import { useCertificationContext } from "../context/CertificationContext.js";
 import { useNavigate } from "react-router-dom";
 import { applyTransaction } from "../utilites/applyTransaction.js";
 import { Spinner } from "react-bootstrap";
+import { Claim } from "../context/CertificationContext.jsx";
 
 export function Apply() {
 
@@ -56,9 +57,20 @@ export function Apply() {
         e.preventDefault();
         // alert(`${sendChecked},${plasticData.plasticType},${plasticData.plasticQuantity}`);
         const id = addClaim(user, approverData.publicKey, sendChecked, plasticData.plasticType, plasticData.plasticQuantity, false);
-        console.log(id);
+        // console.log(id);
         setSubmitLoading(true);
-        const applyTx = await applyTransaction(user, id, approverData.publicKey);
+
+        const claim: Claim = {
+            id: id,
+            applierAddress: user,
+            verifierAddress: approverData.publicKey,
+            isSender: sendChecked,
+            plasticType: plasticData.plasticType,
+            plasticQuantity: plasticData.plasticQuantity,
+            isApproved: false
+        };
+
+        const applyTx = await applyTransaction(user, id, approverData.publicKey, claim);
         if (applyTx) {
             addApplierSignature(id, applyTx);
             console.log(applyTx);
