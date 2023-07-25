@@ -3,8 +3,9 @@ import profiles from "../data/profiles.json";
 import { abi } from "../data/gacert_contract.json";
 import { hashGenerator } from "./hashGenerator";
 import {Claim} from "../context/CertificationContext.jsx";
+import {Passport} from "../components/PassportClaim.js";
 
-export async function approveTransaction(approver: string, id: number , claim : Claim) {
+export async function approveTransaction(approver: string, id: number , claim : Claim|Passport) {
 
     const profile = profiles.find(p => p.publicKey === approver);
     if (!profile) return null;

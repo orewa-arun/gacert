@@ -3,11 +3,15 @@ import { Passport } from "../components/PassportClaim";
 import { useState } from "react";
 import { Profile } from "../components/Profile";
 import { useCertificationContext } from "../context/CertificationContext";
+import { Link } from "react-router-dom";
 
 export function PassportCertificates() {
 
     const jsonValue = localStorage.getItem("passport")!;
     if (!jsonValue) return null;
+
+    const applySig = localStorage.getItem("passportApplication")!;
+    const approveSig = localStorage.getItem("passportVerification")!;
 
     const passportData: Passport = JSON.parse(jsonValue);
 
@@ -129,6 +133,8 @@ export function PassportCertificates() {
                             <Col className="d-flex align-items-center">
                                 <img style={{ width: "3.5rem" }} src="/imgs/bullet.png" />
                                 <span className="fs-6 fw-bold">&#160;{recyclerName} (Recycler)</span>
+                                <span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span>
+                                <Link className="fw-bold" to={applySig}>Rajesh</Link>
                             </Col>
                         </Row>
                         <div className="mx-4" style={{ borderLeft: "6px solid grey" }}>
@@ -140,6 +146,8 @@ export function PassportCertificates() {
                             <Col className="d-flex align-items-center">
                                 <img style={{ width: "3.5rem" }} src="/imgs/bullet.png" />
                                 <span className="fs-6 fw-bold">&#160;{wmaName} (WMA)</span>
+                                <span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span>
+                                <Link className="fw-bold" to={approveSig}>Suresh</Link>
                             </Col>
                         </Row>
                     </Container>

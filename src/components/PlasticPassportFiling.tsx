@@ -3,6 +3,7 @@ import { Col, Container, Row, Form, Button, Stack, Spinner } from "react-bootstr
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useCertificationContext } from "../context/CertificationContext";
 import { useNavigate } from "react-router-dom";
+import { applyTransaction } from "../utilites/applyTransaction";
 
 export function PlasticPassportFiling() {
 
@@ -33,8 +34,9 @@ export function PlasticPassportFiling() {
         GHGEmission: "",
         ScopeEmission: "",
         EndOfLifeCollectionInformation: "",
-        user: ""
-    })
+    });
+
+    const [applicationSignature, setApplicationSignature] = useLocalStorage("passportApplication", "");
 
     const [agreed, setAgreed] = useState(false);
 
@@ -43,13 +45,22 @@ export function PlasticPassportFiling() {
         setPassportData((previousData) => ({ ...previousData, [name]: value }));
     }
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const recyclerAddress = "0x180Aa54f13779b1D6b550B42Ed8d1FF200A0D781";
+    const auditorAddress = "0x8f4D3e323D63abaf0A9489D83b2c7B3a74220870";
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setPassportData((previousData) => ({ ...previousData, [user]: user }));
-        const jsonValue = localStorage.getItem(key);
-        if (jsonValue != null) console.log(JSON.parse(jsonValue));
         setSubmit(true);
-        navigate('/passporthome');
+        const applyTx = await applyTransaction(user, 0, auditorAddress, passportData);
+        if (applyTx) {
+            setApplicationSignature(applyTx);
+            console.log(applyTx);
+            navigate('/passporthome');
+            alert(`Your application is successful,check ${applyTx} to view on block explorer!!`);
+        } else {
+            alert("Transaction apply failed!!");
+        }
+
     }
 
     const handleAgree = (e: React.ChangeEvent<HTMLInputElement>) => {
