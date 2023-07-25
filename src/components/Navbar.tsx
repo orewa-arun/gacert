@@ -35,6 +35,30 @@ export function Navbar() {
                             transform: "translate(25%,-13%)"
                         }} />
                     </Nav.Link>
+                    <Nav.Link to="/applypassport" as={NavLink} className="mx-2">
+                        Apply Digital Passport
+                        <img src="/imgs/apply.svg" style={{
+                            height: "1.5rem",
+                            width: "1.5rem",
+                            transform: "translate(25%,-13%)"
+                        }} />
+                    </Nav.Link>
+                    <Nav.Link to="/passportcertificates" as={NavLink} className="mx-2">
+                        Passport Certificates
+                        <img src="/imgs/certificates.svg" style={{
+                            height: "1.5rem",
+                            width: "1.5rem",
+                            transform: "translate(25%,-13%)"
+                        }} />
+                    </Nav.Link>
+                    <Nav.Link to="/passportcertificates" as={NavLink} className="mx-2">
+                        Passport Certificates
+                        <img src="/imgs/certificates.svg" style={{
+                            height: "1.5rem",
+                            width: "1.5rem",
+                            transform: "translate(25%,-13%)"
+                        }} />
+                    </Nav.Link>
                 </Nav>
                 <div>
                     User : {user}
