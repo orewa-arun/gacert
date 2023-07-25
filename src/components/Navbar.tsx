@@ -51,8 +51,8 @@ export function Navbar() {
                             transform: "translate(25%,-13%)"
                         }} />
                     </Nav.Link>
-                    <Nav.Link to="/passportcertificates" as={NavLink} className="mx-2">
-                        Passport Certificates
+                    <Nav.Link to="/passporthome" as={NavLink} className="mx-2">
+                        Passport Home
                         <img src="/imgs/certificates.svg" style={{
                             height: "1.5rem",
                             width: "1.5rem",

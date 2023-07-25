@@ -45,7 +45,6 @@ export function Claim({
                                 <div className="d-flex justify-content-center">
                                     {showApprover && <Profile publicKey={verifierAddress} />}
                                 </div>
-
                                 <Row className="d-flex align-items-center">
                                     <Col className="fw-bold fs-5" xs={4}>Send/Receive :</Col>
                                     <Col className="fs-5" xs={6}>{isSender ? <div>Sent</div> : <div>Receive</div>}</Col>
