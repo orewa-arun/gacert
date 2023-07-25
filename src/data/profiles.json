@@ -16,5 +16,14 @@
         "publicKey": "0xF32ceD175171E3D5D80072Db124139FD929af2AE",
         "privateKey": "fae0219ddfa5238d43b02c9e6ee9b02618d3b7f18000f3874f4699c482595e35",
         "imgURL": "/imgs/suresh.png"
+    },
+    {
+        "Name": "Auditor",
+        "mobileNo": "9444567889",
+        "DOB": "1970-04-18",
+        "Role": "Auditor",
+        "publicKey": "0x8f4D3e323D63abaf0A9489D83b2c7B3a74220870",
+        "privateKey": "a3baae51a43461422fc9836ce1d47c625a255ce0a01a56a97ceccb25632e5dee",
+        "imgURL": "/imgs/auditor.png"
     }
 ]

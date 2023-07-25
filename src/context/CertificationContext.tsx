@@ -56,6 +56,8 @@ export function CertificationProvider({ children }: CertificationProviderProps) 
     const changeUser = () => {
         if (user === "0xF32ceD175171E3D5D80072Db124139FD929af2AE") {
             setUser("0x180Aa54f13779b1D6b550B42Ed8d1FF200A0D781");
+        } else if (user === "0x180Aa54f13779b1D6b550B42Ed8d1FF200A0D781") {
+            setUser("0x8f4D3e323D63abaf0A9489D83b2c7B3a74220870");
         } else {
             setUser("0xF32ceD175171E3D5D80072Db124139FD929af2AE");
         }
