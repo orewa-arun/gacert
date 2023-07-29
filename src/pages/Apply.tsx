@@ -74,6 +74,7 @@ export function Apply() {
         if (applyTx) {
             addApplierSignature(id, applyTx);
             console.log(applyTx);
+            localStorage.setItem("claimApply", applyTx);
             navigate("/");
             alert(`Your application is successful,check ${applyTx} to view on block explorer!!`);
         } else {

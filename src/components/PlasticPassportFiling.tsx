@@ -8,6 +8,7 @@ import { applyTransaction } from "../utilites/applyTransaction";
 export function PlasticPassportFiling() {
 
     const navigate = useNavigate();
+    localStorage.setItem("applied", "false");
 
     const { user } = useCertificationContext();
 
@@ -36,7 +37,7 @@ export function PlasticPassportFiling() {
         EndOfLifeCollectionInformation: "",
     });
 
-    const [applicationSignature, setApplicationSignature] = useLocalStorage("passportApplication", "");
+    // const [applicationSignature, setApplicationSignature] = useLocalStorage("passportApplication", "");
 
     const [agreed, setAgreed] = useState(false);
 
@@ -53,14 +54,15 @@ export function PlasticPassportFiling() {
         setSubmit(true);
         const applyTx = await applyTransaction(user, 0, auditorAddress, passportData);
         if (applyTx) {
-            setApplicationSignature(applyTx);
-            console.log(applyTx);
+            // setApplicationSignature(applyTx);
+            localStorage.setItem("passportApplication", applyTx);
+            localStorage.setItem("applied", "true");
+            // console.log(applyTx);
             navigate('/passporthome');
             alert(`Your application is successful,check ${applyTx} to view on block explorer!!`);
         } else {
             alert("Transaction apply failed!!");
         }
-
     }
 
     const handleAgree = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -236,14 +238,14 @@ export function PlasticPassportFiling() {
                                 placeholder="Enter water consumption" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formGHGEmission">
-                            <Form.Label>GHG Emission (in kg CO2):</Form.Label>
+                            <Form.Label>GHG Emission (in g CO2):</Form.Label>
                             <Form.Control type="text"
                                 onChange={handlePassportChange}
                                 name="GHGEmission"
                                 placeholder="Enter GHG Emission" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formScopeEmission">
-                            <Form.Label>Scope Emission (in kg CO2):</Form.Label>
+                            <Form.Label>Scope Emission (in g CO2):</Form.Label>
                             <Form.Control type="text"
                                 onChange={handlePassportChange}
                                 name="ScopeEmission"

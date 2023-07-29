@@ -57,7 +57,7 @@ export function PassportClaim() {
                     <Container>
                         <Row className="d-flex align-items-center mb-3">
                             <Col className="fw-bold" xs={10}>Batch id : {passportData.BatchTraceability}</Col>
-                            <Col className="fw-bold" xs={2}>Weight : {passportData.ProductWeight} kg</Col>
+                            <Col className="fw-bold" xs={2}>Weight : {passportData.ProductWeight} g</Col>
                         </Row>
                         {/* Columns are always 50% wide, on mobile and desktop */}
                         <div className="d-flex justify-content-center">
@@ -121,11 +121,11 @@ export function PassportClaim() {
                             <Row className="d-flex text-center border-bottom align-items-center my-2">
                                 <Col xs={6}>
                                     <span style={{ color: "green" }}>GHG emission : </span>
-                                    <span>{passportData.GHGEmission} Kg CO2</span>
+                                    <span>{passportData.GHGEmission} g CO2</span>
                                 </Col>
                                 <Col xs={6}>
                                     <span style={{ color: "green" }}>scope emission : </span>
-                                    <span>{passportData.ScopeEmission} Kg CO2</span>
+                                    <span>{passportData.ScopeEmission} g CO2</span>
                                 </Col>
                             </Row>
                         </div>

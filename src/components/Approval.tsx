@@ -48,6 +48,7 @@ export function Approval({
         if (approveTx) {
             approveClaim(id);
             addApproverSignature(id, approveTx);
+            localStorage.setItem("claimApproval", approveTx);
             console.log(approveTx);
             navigate("/certificates");
             alert(`Your certificate is successfully generated,check ${approveTx} to view on block explorer!!`);

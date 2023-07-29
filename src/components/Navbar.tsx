@@ -19,16 +19,28 @@ export function Navbar() {
             <Container className="d-flex justify-content-between">
                 <Nav className="me-auto">
                     {
-                        isWMA && (
+                        (isWMA || isRecycler) && (
+                            <Nav.Link to="/" as={NavLink} className="mx-2">
+                                Home
+                                <img src="/imgs/home.svg" style={{
+                                    height: "1.5rem",
+                                    width: "1.5rem",
+                                    transform: "translate(25%,-13%)"
+                                }} />
+                            </Nav.Link>
+                        )
+                    }
+                    {
+                        (isWMA) && (
                             <div className="d-flex">
-                                <Nav.Link to="/" as={NavLink} className="mx-2">
+                                {/* <Nav.Link to="/" as={NavLink} className="mx-2">
                                     Home
                                     <img src="/imgs/home.svg" style={{
                                         height: "1.5rem",
                                         width: "1.5rem",
                                         transform: "translate(25%,-13%)"
                                     }} />
-                                </Nav.Link>
+                                </Nav.Link> */}
                                 <Nav.Link to="/apply" as={NavLink} className="mx-2">
                                     Apply
                                     <img src="/imgs/apply.svg" style={{
@@ -52,7 +64,7 @@ export function Navbar() {
                         (isRecycler || isAuditor) && (
                             <div className="d-flex">
                                 <Nav.Link to="/passporthome" as={NavLink} className="mx-2">
-                                    home
+                                    passport home
                                     <img src="/imgs/home.svg" style={{
                                         height: "1.5rem",
                                         width: "1.5rem",
